@@ -8,6 +8,8 @@
         <td>名称</td>
         <td>密码</td>
         <td>年龄</td>
+        <td>编辑</td>
+        <td>删除</td>
     </tr>
     <c:forEach items="${users}" var="user" varStatus="st">
         <tr>
@@ -15,6 +17,8 @@
             <td>${user.userName}</td>
             <td>${user.password}</td>
             <td>${user.age}</td>
+            <td><a id="${user.id}" class="button" href="editUser?id=${user.id}&userName=${user.userName}&password=${user.password}&age=${user.age}">编辑</a></td>
+            <td><a>编辑</a></td>
         </tr>
     </c:forEach>
 </table>

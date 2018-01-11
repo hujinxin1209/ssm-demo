@@ -53,4 +53,12 @@ public class UserController {
 		userService.addUser(user);
 		return null;
 	}
+	
+	@RequestMapping("/editUser")
+	public ModelAndView editUser(User user) {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.addObject("user", user);
+		modelAndView.setViewName("editUser");
+		return modelAndView;
+	}
 }
