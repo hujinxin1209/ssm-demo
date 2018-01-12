@@ -48,4 +48,5 @@ public interface UserMapper {
     List<User> listUser();
     List<User> listUser(Page page);
     int total();
+    void saveUser(User user);
 }

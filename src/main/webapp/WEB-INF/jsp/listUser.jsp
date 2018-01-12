@@ -18,7 +18,8 @@
             <td>${user.password}</td>
             <td>${user.age}</td>
             <td><a id="${user.id}" class="button" href="editUser?id=${user.id}&userName=${user.userName}&password=${user.password}&age=${user.age}">编辑</a></td>
-            <td><a>编辑</a></td>
+            <td><a id="${user.id}" class="button" href="deleteUser?id=${user.id}&userName=${user.userName}&password=${user.password}&age=${user.age}">删除</a></td>
+            
         </tr>
     </c:forEach>
 </table>

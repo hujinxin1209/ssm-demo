@@ -12,6 +12,10 @@ public interface IUserService {
 	
 	public List<User> listUser();
 	
+	public void saveUser(User user);
+	
+	public void insertUser(User user);
+	
 //	int total();
 //    public List<User> listUser(Page page);
 }

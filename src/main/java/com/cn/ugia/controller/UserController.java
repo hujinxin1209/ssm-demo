@@ -61,4 +61,10 @@ public class UserController {
 		modelAndView.setViewName("editUser");
 		return modelAndView;
 	}
+	
+	@RequestMapping("/saveUser")
+	public ModelAndView saveUser(User user) {
+		userService.saveUser(user);
+		return listUser(null);
+	}
 }
