@@ -10,10 +10,6 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.small.eyed.app.bean.pojo.PhoneMessage;
-import com.small.eyed.app.exception.ErrCodeApp;
-import com.small.eyed.app.exception.EyedException;
-
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -161,43 +157,43 @@ public final class RedisUtils {
 	 * @param type
 	 *            1=用户注册，2=找回密码
 	 */
-	public static void checkMessage(String phoneNumber, String verificationCode, int type) {
-		// 校验手机号
-		if (!SecurityUtils.isMobileNO(phoneNumber)) {
-			throw new EyedException(ErrCodeApp.INVALID_PHONE_ERROR);
-		}
-
-		// 测试环境默认验证码
-		if ("1".equals(EyedUtils.SERVER_ENVIRONMENT)) {
-			if ("123456".equals(verificationCode)) {
-				return;
-			}
-		}
-		// 检查手机验证码不能为空
-		if (verificationCode == "" || verificationCode == null) {
-			log.warn("验证码为空！");
-			throw new EyedException(ErrCodeApp.INVALID_VERIFICATIONCODE_FAIL);
-		}
-		String key = "";
-		if (type == 1) {
-			key = "eyedRegister" + verificationCode;
-		} else if (type == 2) {
-			key = "eyedForgetPw" + verificationCode;
-		}
-		Jedis jedis = getJedis();
-		byte[] redisPhoneMessageByte = jedis.get(("phone" + phoneNumber).getBytes());
-		if (redisPhoneMessageByte != null) {
-			PhoneMessage redisPhoneMessage = (PhoneMessage) RedisUtils.deSerialize(redisPhoneMessageByte);
-			// 获取两次验证码的时间差.
-			String redisVerificationCode = redisPhoneMessage.getVerificationCode();
-			// 校验验证码
-			if (!key.equals(redisVerificationCode)) {
-				log.info("用户:" + phoneNumber + "校验验证码错误");
-				throw new EyedException(ErrCodeApp.INVALID_VERIFICATIONCODE_FAIL);
-			}
-		} else {
-			log.info("用户:" + phoneNumber + "");
-			throw new EyedException(ErrCodeApp.INVALID_VERIFICATIONCODE_OBSOLETE);
-		}
-	}
+//	public static void checkMessage(String phoneNumber, String verificationCode, int type) {
+//		// 校验手机号
+//		if (!SecurityUtils.isMobileNO(phoneNumber)) {
+//			throw new EyedException(ErrCodeApp.INVALID_PHONE_ERROR);
+//		}
+//
+//		// 测试环境默认验证码
+//		if ("1".equals(EyedUtils.SERVER_ENVIRONMENT)) {
+//			if ("123456".equals(verificationCode)) {
+//				return;
+//			}
+//		}
+//		// 检查手机验证码不能为空
+//		if (verificationCode == "" || verificationCode == null) {
+//			log.warn("验证码为空！");
+//			throw new EyedException(ErrCodeApp.INVALID_VERIFICATIONCODE_FAIL);
+//		}
+//		String key = "";
+//		if (type == 1) {
+//			key = "eyedRegister" + verificationCode;
+//		} else if (type == 2) {
+//			key = "eyedForgetPw" + verificationCode;
+//		}
+//		Jedis jedis = getJedis();
+//		byte[] redisPhoneMessageByte = jedis.get(("phone" + phoneNumber).getBytes());
+//		if (redisPhoneMessageByte != null) {
+//			PhoneMessage redisPhoneMessage = (PhoneMessage) RedisUtils.deSerialize(redisPhoneMessageByte);
+//			// 获取两次验证码的时间差.
+//			String redisVerificationCode = redisPhoneMessage.getVerificationCode();
+//			// 校验验证码
+//			if (!key.equals(redisVerificationCode)) {
+//				log.info("用户:" + phoneNumber + "校验验证码错误");
+//				throw new EyedException(ErrCodeApp.INVALID_VERIFICATIONCODE_FAIL);
+//			}
+//		} else {
+//			log.info("用户:" + phoneNumber + "");
+//			throw new EyedException(ErrCodeApp.INVALID_VERIFICATIONCODE_OBSOLETE);
+//		}
+//	}
 }
